@@ -1,0 +1,13 @@
+{
+  "name": "collar_tools",
+  "version": "1.0.0",
+  "main": "ble.js",
+  "license": "MIT",
+  "bin": {
+    "collar_tools": "./cli.js"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "noble": "^1.8.1"
+  }
+}
