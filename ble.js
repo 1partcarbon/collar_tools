@@ -19,7 +19,7 @@ const startBle = function () {
 const startScan = function () {
 	startBle();
 	noble.on('discover', function (peripheral) {
-		console.log(peripheral.advertisement.localName + ' - ' + peripheral.address);
+		console.log(peripheral.advertisement.localName + ' - ADDRESS: ' + peripheral.address + ' - ID: ' + peripheral.id);
 	});
 }
 
@@ -34,7 +34,7 @@ const subscribe = function (characteristic) {
 }
 
 const connect = function (peripheral) {
-	console.log('👯‍ connecting to %s', peripheral.address);
+	console.log('👯‍ connecting to %s', peripheral.advertisement.localName);
 	peripheral.connect(function (error) {
 		peripheral.discoverAllServicesAndCharacteristics(function (error, services, characteristics) {
 			var characteristic = characteristics[0];
@@ -43,11 +43,11 @@ const connect = function (peripheral) {
 	});
 }
 
-const connectTo = function (address, options) {
+const connectTo = function (identifier, options) {
 	startBle();
-	console.log('👀 seaching for %s...', address);
+	console.log('👀 seaching for %s...', identifier);
 	noble.on('discover', function (peripheral) {
-		if (peripheral.address === address) {
+		if (peripheral.address === identifier || peripheral.id === identifier || peripheral.advertisement.localName === identifier) {
 			noble.stopScanning();
 			connect(peripheral);
 			peripheral.on('disconnect', function () {
